@@ -17,7 +17,7 @@ public class AppFrame extends JFrame {
     ButtonController buttonController;
 
     public AppFrame() {
-        super("VisualDB");
+        super("Tabula");
         initFrame();
         initComponents();
         adding();

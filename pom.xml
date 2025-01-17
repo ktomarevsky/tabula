@@ -52,7 +52,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        com.visualdb.Main.Main
+                                        org.tabula.Main.Main
                                     </mainClass>
                                 </manifest>
                             </archive>
@@ -77,7 +77,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/target/folder</outputDirectory>
+                            <outputDirectory>${basedir}/target/configuration</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>configuration</directory>
