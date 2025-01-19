@@ -22,8 +22,8 @@ public class FileReaderWriter {
     static private Properties properties;
 
     static private final String PARAMETERS = "parameters.properties";
-    static public final String PATH_TO_CREDENTIALS_LIST = "configuration/connections";
-    static public final String PATH_TO_TABLESET_LIST = "configuration/tablesets";
+    static public final String PATH_TO_CREDENTIALS_LIST = "config/connections";
+    static public final String PATH_TO_TABLESET_LIST = "config/tablesets";
 
     static public void writeXMLToFile(Document document, String fileName) {
         DOMSource source = new DOMSource(document);

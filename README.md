@@ -13,7 +13,7 @@ The simple application to visualize your database tables and appropriate depende
 ## How to use
 * Load the source code to your local computer.
 * Build the executable jar file using the Maven tool.
-* Open target directory -> executable jar file should be generated. It is important, that the folder "conf" is presented.
+* Open target directory -> executable jar file should be generated. It is important, that the folder "config" is presented.
 * Run the executable jar file Tabula-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 ![EmptyLayout.png](md_resources/EmptyLayout.png)
