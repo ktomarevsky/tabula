@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
+import java.util.ResourceBundle;
 
 public class ImageHandler {
 
@@ -48,7 +49,9 @@ public class ImageHandler {
             Writer out1 = new FileWriter(outputFile);
             svgGenerator.stream(out1, useCSS);
         } catch (Exception exception) {
-            JOptionPane.showMessageDialog(frame, "Unknown error!" + exception.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
+            var names = ResourceBundle.getBundle("names");
+            var message = String.format(names.getString("UNKNOWN_ERROR"), exception.getMessage());
+            JOptionPane.showMessageDialog(frame, message, names.getString("DIALOG_TITLE_ERROR"), JOptionPane.ERROR_MESSAGE);
         }
     }
 }

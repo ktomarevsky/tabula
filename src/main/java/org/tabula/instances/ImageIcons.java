@@ -10,7 +10,6 @@ public class ImageIcons {
 
     static public Image mainIcon;
     static public Icon tabIcon;
-    static public Icon databases;
     static {
         try {
             mainIcon = ImageIO.read(ImageIcons.class.getResource("/icon.jpg"));
@@ -24,14 +23,6 @@ public class ImageIcons {
             tabIcon = new ImageIcon(ImageIO.read(ImageIcons.class.getResource("/TabIcon.jpg")));
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    static {
-        try {
-            databases = new ImageIcon(ImageIO.read(ImageIcons.class.getResource("/databases.jpg")));
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
         }
     }
 }

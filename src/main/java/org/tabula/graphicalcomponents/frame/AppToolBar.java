@@ -4,6 +4,7 @@ import org.tabula.instances.ImageIcons;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ResourceBundle;
 
 public class AppToolBar extends JPanel {
 
@@ -30,31 +31,31 @@ public class AppToolBar extends JPanel {
     }
 
     private void initComponents() {
+        var names = ResourceBundle.getBundle("names");
         connectionDialogCallButton = new ToolBarButton();
-        connectionDialogCallButton.setToolTipText("Manage connections");
+        connectionDialogCallButton.setToolTipText(names.getString("BUTTON_TOOLTIP_CONNECTIONS"));
 
         tablesetDialogButton = new ToolBarButton();
-        tablesetDialogButton.setToolTipText("Manage tablesets");
+        tablesetDialogButton.setToolTipText(names.getString("BUTTON_TOOLTIP_TABLESETS"));
 
         loadDataAndCreateModelDialogButton = new ToolBarButton();
-        loadDataAndCreateModelDialogButton.setToolTipText("Load data and create model");
+        loadDataAndCreateModelDialogButton.setToolTipText(names.getString("BUTTON_TOOLTIP_MODEL_CREATION"));
 
         saveModelButton = new ToolBarButton();
-        saveModelButton.setToolTipText("Save model");
+        saveModelButton.setToolTipText(names.getString("BUTTON_TOOLTIP_SAVE_MODEL"));
 
         openModelButton = new ToolBarButton();
-        openModelButton.setToolTipText("Open model");
+        openModelButton.setToolTipText(names.getString("BUTTON_TOOLTIP_OPEN_MODEL"));
 
         saveImageButton = new ToolBarButton();
-        saveImageButton.setToolTipText("Save model as image");
+        saveImageButton.setToolTipText(names.getString("BUTTON_TOOLTIP_SAVE_AS_IMAGE"));
 
-//        connectionDialogCallButton.setText("Н");
-        connectionDialogCallButton.setIcon(ImageIcons.databases);
-        tablesetDialogButton.setText("M");
-        loadDataAndCreateModelDialogButton.setText("P");
-        saveModelButton.setText("S");
-        openModelButton.setText("O");
-        saveImageButton.setText("I");
+        connectionDialogCallButton.setText(names.getString("BUTTON_CONNECTIONS"));
+        tablesetDialogButton.setText(names.getString("BUTTON_TABLESETS"));
+        loadDataAndCreateModelDialogButton.setText(names.getString("BUTTON_MODEL_CREATION"));
+        saveModelButton.setText(names.getString("BUTTON_SAVE_MODEL"));
+        openModelButton.setText(names.getString("BUTTON_OPEN_MODEL"));
+        saveImageButton.setText(names.getString("BUTTON_SAVE_AS_IMAGE"));
     }
 
     private void adding() {

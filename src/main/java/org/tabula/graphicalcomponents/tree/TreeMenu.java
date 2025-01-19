@@ -1,6 +1,7 @@
 package org.tabula.graphicalcomponents.tree;
 
 import javax.swing.*;
+import java.util.ResourceBundle;
 
 public class TreeMenu extends JPopupMenu {
 
@@ -15,8 +16,9 @@ public class TreeMenu extends JPopupMenu {
     }
 
     private void initComponents() {
-        deleteItem = new JMenuItem("Delete");
-        showOnLayoutItem = new JMenuItem("Show on layout");
+        var names = ResourceBundle.getBundle("names");
+        deleteItem = new JMenuItem(names.getString("DELETE"));
+        showOnLayoutItem = new JMenuItem(names.getString("SHOW_ON_LAYOUT"));
     }
 
     private void adding() {

@@ -23,6 +23,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class DragController implements Serializable {
@@ -156,7 +157,8 @@ public class DragController implements Serializable {
             public void actionPerformed(ActionEvent evt) {
                 List<Table> selectedTables = model.getSelectedTables();
                 if(selectedTables.size() > 0) {
-                    int value = JOptionPane.showConfirmDialog(ApplicationInstance.getInstance().getAppFrame(), "Are you sure you want to drop these tables?", "Confirm", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    var names = ResourceBundle.getBundle("names");
+                    int value = JOptionPane.showConfirmDialog(ApplicationInstance.getInstance().getAppFrame(), names.getString("DELETE_TABLE_QUESTION"), names.getString("DIALOG_TITLE_QUESTION"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (value == 0) {
                         ModelTree tree = ApplicationInstance.getInstance().getAppFrame().getTree();
                         ModelNode modelNode = tree.getCurrentModelNode(model);
@@ -165,7 +167,8 @@ public class DragController implements Serializable {
                         tree.updateUI();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(ApplicationInstance.getInstance().getAppFrame(), "No tables selected!", "Info", JOptionPane.INFORMATION_MESSAGE);
+                    var names = ResourceBundle.getBundle("names");
+                    JOptionPane.showMessageDialog(ApplicationInstance.getInstance().getAppFrame(), names.getString("NO_TABLE_SELECTED"), names.getString("DIALOG_TITLE_INFO"), JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
@@ -194,14 +197,16 @@ public class DragController implements Serializable {
                 List<Table> tables = model.getTables().stream().filter(Table::isCursor).collect(Collectors.toList());
 
                 if(tables.size() > 0) {
-                    Color color = JColorChooser.showDialog(ApplicationInstance.getInstance().getAppFrame(), "Select a color", TableParameters.TABLE_COLOR);
+                    var names = ResourceBundle.getBundle("names");
+                    Color color = JColorChooser.showDialog(ApplicationInstance.getInstance().getAppFrame(), names.getString("DIALOG_TITLE_SELECT_COLOR"), TableParameters.TABLE_COLOR);
                     if(color != null) {
                         tables.forEach(table -> table.setColor(color));
                         model.setSaved(false);
                         model.updateUI();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(ApplicationInstance.getInstance().getAppFrame(), "No tables selected!", "Info", JOptionPane.INFORMATION_MESSAGE);
+                    var names = ResourceBundle.getBundle("names");
+                    JOptionPane.showMessageDialog(ApplicationInstance.getInstance().getAppFrame(), names.getString("NO_TABLE_SELECTED"), names.getString("DIALOG_TITLE_INFO"), JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
@@ -214,7 +219,9 @@ public class DragController implements Serializable {
             public void actionPerformed(ActionEvent evt) {
                 int result = 1;
                 if(!model.isSaved()) {
-                    result = JOptionPane.showConfirmDialog(ApplicationInstance.getInstance().getAppFrame(), "Model '"+ model.getName() +"' is not saved. Would You like to close it without saving?", "Message",
+                    var names = ResourceBundle.getBundle("names");
+                    var message = String.format(names.getString("MODEL_NOT_SAVED_CLOSE_WITHOUT_SAVING"), model.getName());
+                    result = JOptionPane.showConfirmDialog(ApplicationInstance.getInstance().getAppFrame(), message, names.getString("DIALOG_TITLE_QUESTION"),
                             JOptionPane.YES_NO_OPTION);
                     if(result == JOptionPane.YES_OPTION) {
 
@@ -270,7 +277,9 @@ class Task extends SwingWorker<String, Object> {
                 tableset.setTables(selectedTable1.getName());
                 DBType dbType = model.getCredentials().getDbType();
                 if(dbType == null) {
-                    throw new RuntimeException("DB connection '" + model.getCredentials().getConnectionName() + "' configured in this model not exists! \n Please change it in the model configuration.");
+                    var names = ResourceBundle.getBundle("names");
+                    var message = String.format(names.getString("DB_CONNECTION_NOT_EXISTS"), model.getCredentials().getConnectionName());
+                    throw new RuntimeException(message);
                 }
                 DBLoader<Credentials, Tableset, Model> dbLoader = dbType.getDBLoader();
                 dbLoader.setCredentials(model.getCredentials());
@@ -290,14 +299,18 @@ class Task extends SwingWorker<String, Object> {
             } catch (RuntimeException runtimeException) {
                 frame.setEnabled(true);
                 dialog.dispose();
-                JOptionPane.showMessageDialog(frame, "DB connection error! \n" + runtimeException, "Error", JOptionPane.ERROR_MESSAGE);
+                var names = ResourceBundle.getBundle("names");
+                var message = String.format(names.getString("DB_CONN_ERROR"), runtimeException);
+                JOptionPane.showMessageDialog(frame, message, names.getString("DIALOG_TITLE_ERROR"), JOptionPane.ERROR_MESSAGE);
             }
 
 
         } else if (selectedTables.size() == 0) {
-            JOptionPane.showMessageDialog(frame, "No tables selected!", "Info", JOptionPane.INFORMATION_MESSAGE);
+            var names = ResourceBundle.getBundle("names");
+            JOptionPane.showMessageDialog(frame, names.getString("NO_TABLE_SELECTED"), names.getString("DIALOG_TITLE_INFO"), JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(frame, "Multiple table selection not allowed here. Please choose only one table.", "Info", JOptionPane.INFORMATION_MESSAGE);
+            var names = ResourceBundle.getBundle("names");
+            JOptionPane.showMessageDialog(frame, names.getString("MULTIPLE_TABLE_SELECTION_NOT_ALLOWED"), names.getString("DIALOG_TITLE_INFO"), JOptionPane.INFORMATION_MESSAGE);
         }
         return null;
     }

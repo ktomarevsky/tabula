@@ -27,6 +27,7 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class ButtonController {
@@ -58,7 +59,9 @@ public class ButtonController {
                 try {
                     TableSetDialog dialog = new TableSetDialog(frame);
                 } catch (RuntimeException runtimeException) {
-                    JOptionPane.showMessageDialog(frame, "Resource file is corrupted! \n" + runtimeException, "Error!", JOptionPane.ERROR_MESSAGE);
+                    var names = ResourceBundle.getBundle("names");
+                    var message = String.format(names.getString("FILE_CORRUPTED"), runtimeException);
+                    JOptionPane.showMessageDialog(frame, message, names.getString("DIALOG_TITLE_ERROR"), JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -68,7 +71,9 @@ public class ButtonController {
                 try {
                     ConnectionDialog dialog = new ConnectionDialog(frame);
                 } catch (RuntimeException runtimeException) {
-                    JOptionPane.showMessageDialog(frame, "Resource file is corrupted! \n" + runtimeException, "Error!", JOptionPane.ERROR_MESSAGE);
+                    var names = ResourceBundle.getBundle("names");
+                    var message = String.format(names.getString("FILE_CORRUPTED"), runtimeException);
+                    JOptionPane.showMessageDialog(frame, message, names.getString("DIALOG_TITLE_ERROR"), JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -79,7 +84,9 @@ public class ButtonController {
                 try {
                     ModelCreationDialog dialog = new ModelCreationDialog(frame);
                 } catch (RuntimeException runtimeException) {
-                    JOptionPane.showMessageDialog(frame, "Resource file is corrupted! \n" + runtimeException, "Error!", JOptionPane.ERROR_MESSAGE);
+                    var names = ResourceBundle.getBundle("names");
+                    var message = String.format(names.getString("FILE_CORRUPTED"), runtimeException);
+                    JOptionPane.showMessageDialog(frame, message, names.getString("DIALOG_TITLE_ERROR"), JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -91,7 +98,8 @@ public class ButtonController {
                 if(model != null) {
                     saveModelAsXML(model);
                 } else {
-                    JOptionPane.showMessageDialog(frame, "No model exists for saving!", "Info", JOptionPane.INFORMATION_MESSAGE);
+                    var names = ResourceBundle.getBundle("names");
+                    JOptionPane.showMessageDialog(frame, names.getString("NO_MODEL_FOR_SAVING"), names.getString("DIALOG_TITLE_INFO"), JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
@@ -110,7 +118,9 @@ public class ButtonController {
                         String modelName = document.getElementsByTagName("modelName").item(0).getTextContent();
 
                         if(Models.getInstance().modelExists(modelName)) {
-                            JOptionPane.showMessageDialog(frame, "Model with the name '" + modelName + "' is already opened!", "Info", JOptionPane.INFORMATION_MESSAGE);
+                            var names = ResourceBundle.getBundle("names");
+                            var message = String.format(names.getString("MODEL_ALREADY_OPENED"), modelName);
+                            JOptionPane.showMessageDialog(frame, message, names.getString("DIALOG_TITLE_INFO"), JOptionPane.INFORMATION_MESSAGE);
 
                         } else {
                             Model model = new Model();
@@ -137,7 +147,9 @@ public class ButtonController {
                         }
 
                     } catch (RuntimeException runtimeException) {
-                        JOptionPane.showMessageDialog(frame, "Selected file is wrong or not a model! \n" + runtimeException.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                        var names = ResourceBundle.getBundle("names");
+                        var message = String.format(names.getString("SELECTED_FILE_WRONG"), runtimeException.getMessage());
+                        JOptionPane.showMessageDialog(frame, message, names.getString("DIALOG_TITLE_ERROR"), JOptionPane.ERROR_MESSAGE);
                     }
 
                 }
@@ -161,25 +173,32 @@ public class ButtonController {
                                 try {
                                     FileReaderWriter.writeImage(image, outputFile);
                                 } catch (Exception exception) {
-                                    JOptionPane.showMessageDialog(frame, "Unknown error!" + exception.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
+                                    var names = ResourceBundle.getBundle("names");
+                                    var message = String.format(names.getString("UNKNOWN_ERROR"), exception.getMessage());
+                                    JOptionPane.showMessageDialog(frame, message, names.getString("DIALOG_TITLE_ERROR"), JOptionPane.ERROR_MESSAGE);
                                 }
                             } else {
-                                int flag = JOptionPane.showConfirmDialog(frame, "File " + outputFile.getAbsolutePath() + " already exists. Do you want to owerwrite it?", "Question", JOptionPane.YES_NO_OPTION);
+                                var names = ResourceBundle.getBundle("names");
+                                var message = String.format(names.getString("FILE_EXISTS_OVERWRITE"), outputFile.getAbsolutePath());
+                                int flag = JOptionPane.showConfirmDialog(frame, message, names.getString("DIALOG_TITLE_QUESTION"), JOptionPane.YES_NO_OPTION);
                                 if (flag == JOptionPane.OK_OPTION) {
                                     BufferedImage image = ImageHandler.createPNGImage(model);
                                     try {
                                         FileReaderWriter.writeImage(image, outputFile);
                                     } catch (Exception exception) {
-                                        JOptionPane.showMessageDialog(frame, "Unknown error!" + exception.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
+                                        message = String.format(names.getString("UNKNOWN_ERROR"), exception.getMessage());
+                                        JOptionPane.showMessageDialog(frame, message, names.getString("DIALOG_TITLE_ERROR"), JOptionPane.ERROR_MESSAGE);
                                     }
                                 }
                             }
                         }
                     } else {
-                        JOptionPane.showMessageDialog(frame, "Wrong directory!", "Error!", JOptionPane.ERROR_MESSAGE);
+                        var names = ResourceBundle.getBundle("names");
+                        JOptionPane.showMessageDialog(frame, names.getString("WRONG_DIR"), names.getString("DIALOG_TITLE_ERROR"), JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(frame, "No model exists for saving!", "Info", JOptionPane.INFORMATION_MESSAGE);
+                    var names = ResourceBundle.getBundle("names");
+                    JOptionPane.showMessageDialog(frame, names.getString("NO_MODEL_FOR_SAVING"), names.getString("DIALOG_TITLE_INFO"), JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
@@ -190,7 +209,8 @@ public class ButtonController {
                 List<Model> models = Models.getInstance().getModels();
                 List<Model> notSavedModels = models.stream().filter(model -> !model.isSaved()).collect(Collectors.toList());
                 if(!notSavedModels.isEmpty()) {
-                    int status = JOptionPane.showConfirmDialog(frame, "Not saved models exists. Save it?", "Info", JOptionPane.YES_NO_CANCEL_OPTION);
+                    var names = ResourceBundle.getBundle("names");
+                    int status = JOptionPane.showConfirmDialog(frame, names.getString("NOT_SAVED_MODELS_EXIST"), names.getString("DIALOG_TITLE_QUESTION"), JOptionPane.YES_NO_CANCEL_OPTION);
                     if(status == JOptionPane.YES_OPTION) {
                         notSavedModels.forEach(model -> saveModelAsXML(model));
                         frame.dispose();
@@ -217,7 +237,6 @@ public class ButtonController {
 
     private void saveModelAsXML(Model model) {
         AppFrame frame = ApplicationInstance.getInstance().getAppFrame();
-//        ModelView modelView = frame.getTabbedPane().getTabByModel(model).getModel();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         String fileName = model.getName() + ".mdl";
         int confirmed = 1;
@@ -233,7 +252,9 @@ public class ButtonController {
                     model.setSaved(true);
                     confirmed = 0;
                 } else {
-                    confirmed = JOptionPane.showConfirmDialog(frame, "File " + fileName + " already exists. Overwrite it?", JOptionPane.MESSAGE_TYPE_PROPERTY, JOptionPane.YES_NO_OPTION);
+                    var names = ResourceBundle.getBundle("names");
+                    var message = String.format(names.getString("FILE_EXISTS_OVERWRITE"), fileName);
+                    confirmed = JOptionPane.showConfirmDialog(frame, message, names.getString("DIALOG_TITLE_QUESTION"), JOptionPane.YES_NO_OPTION);
                     if (confirmed == JOptionPane.OK_OPTION) {
                         Document document = XMLHandler.createXMLFromModel(model);
                         FileReaderWriter.writeXMLToFile(document, file.getAbsolutePath());

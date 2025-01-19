@@ -8,6 +8,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class ModelNode extends DefaultMutableTreeNode {
 
@@ -20,8 +21,9 @@ public class ModelNode extends DefaultMutableTreeNode {
         super(model.getName());
         this.tree = tree;
         this.model = model;
-        tableNodes = new DefaultMutableTreeNode("Tables");
-        dependenceNodes = new DefaultMutableTreeNode("Dependencies");
+        var names = ResourceBundle.getBundle("names");
+        tableNodes = new DefaultMutableTreeNode(names.getString("TREE_NODES_TABLES"));
+        dependenceNodes = new DefaultMutableTreeNode(names.getString("TREE_NODES_DEPENDENCIES"));
         add(tableNodes);
         add(dependenceNodes);
     }

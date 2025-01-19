@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class TreeController {
     private final TreeMenu menu;
@@ -70,7 +71,8 @@ public class TreeController {
                             ModelNode currentNode = modelTree.getCurrentModelNode(currentModel);
 
                             if(currentNode != null) {
-                                int value = JOptionPane.showConfirmDialog(ApplicationInstance.getInstance().getAppFrame(), "Are you sure you want to drop these tables?", "Confirm", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+                                var names = ResourceBundle.getBundle("names");
+                                int value = JOptionPane.showConfirmDialog(ApplicationInstance.getInstance().getAppFrame(), names.getString("DELETE_TABLE_QUESTION"), names.getString("DIALOG_TITLE_QUESTION"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
                                 if(value == 0) {
                                     currentModel.resetSelection();
                                     list.forEach(path -> {
@@ -83,10 +85,12 @@ public class TreeController {
                                 }
                             }
                         } else {
-                            JOptionPane.showMessageDialog(ApplicationInstance.getInstance().getAppFrame(), "Only tables of the current model can be deleted!", "Error!",  JOptionPane.ERROR_MESSAGE, icon);
+                            var names = ResourceBundle.getBundle("names");
+                            JOptionPane.showMessageDialog(ApplicationInstance.getInstance().getAppFrame(), names.getString("DELETE_TABLE_NOT_ALLOWED"), names.getString("DIALOG_TITLE_ERROR"),  JOptionPane.ERROR_MESSAGE, icon);
                         }
                     } else {
-                        JOptionPane.showMessageDialog(ApplicationInstance.getInstance().getAppFrame(), "Only tables of the current model can be deleted!", "Error!",  JOptionPane.ERROR_MESSAGE, icon);
+                        var names = ResourceBundle.getBundle("name");
+                        JOptionPane.showMessageDialog(ApplicationInstance.getInstance().getAppFrame(), names.getString("DELETE_TABLE_NOT_ALLOWED_ANOTHER_MODEL"), names.getString("DIALOG_TITLE_ERROR"),  JOptionPane.ERROR_MESSAGE, icon);
                     }
                 }
             }

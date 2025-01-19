@@ -4,6 +4,7 @@ import org.tabula.utils.xmlutils.XMLHandler;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import java.util.ResourceBundle;
 import java.util.zip.CRC32;
 import java.util.zip.Checksum;
 
@@ -23,7 +24,8 @@ public class ChecksumHandler {
         try {
             expectedChecksum = Long.parseLong(checksumStr);
         } catch(NumberFormatException numberFormatException) {
-            throw new RuntimeException("Checksum is not a number!");
+            var names = ResourceBundle.getBundle("names");
+            throw new RuntimeException(names.getString("CHECKSUM_NOT_NUMBER"));
         }
 
         checkSum.setTextContent("");
@@ -32,7 +34,8 @@ public class ChecksumHandler {
         long actualChecksum = ChecksumHandler.getCRC32Checksum(xmlAsString);
 
         if(expectedChecksum != actualChecksum) {
-            throw new RuntimeException("XML document is corrupted: checksum not match!");
+            var names = ResourceBundle.getBundle("names");
+            throw new RuntimeException(names.getString("CHECKSUM_NOT_MATCH"));
         }
     }
 }
