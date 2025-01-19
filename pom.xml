@@ -80,7 +80,7 @@
                             <outputDirectory>${basedir}/target/config</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>configuration</directory>
+                                    <directory>config</directory>
                                     <filtering>true</filtering>
                                 </resource>
                             </resources>
